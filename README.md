@@ -1,4 +1,4 @@
-# GeoJSONchemy 🌍🧪
+# GeoJSONchemy [Under Development] 🌍🧪
 GeoJSONchemy is a Python library that provides support for GeoJSON spatial data types in SQLAlchemy and SQLModel. It allows you to easily work with GeoJSON data in your database models. It currently supports ONLY PostgreSQL-[PostGIS](https://postgis.net/).
 
 ![Cover Image Gen via MS Copilot Pro, a globe with map creator tools](cover.jpeg)
@@ -52,11 +52,16 @@ class GeomTable(SQLModel, table=True):
 
 ```
 
+
 ## Note 📝
 Please note that GeoJSONchemy currently only supports PostgreSQL. If you try to use it with a different database, it will raise a NotImplementedError.
 
 ## Contributing 🤝
 Contributions are welcome! Please feel free to submit a pull request.
+
+### TODO
+- [ ] Add support for MutableDict
+
 
 ## License 📄
 GeoJSONchemy is licensed under the MIT license. See the LICENSE file for more details.
