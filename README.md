@@ -55,13 +55,13 @@ class GeomTable(SQLModel, table=True):
 
 
 ## Note 📝
-Please note that GeoJSONchemy currently only supports PostgreSQL. If you try to use it with a different database, it will raise a NotImplementedError.
+Please note that GeoJSONchemy currently only supports PostgreSQL. If you try to use it with a different database, it will raise a `NotImplementedError`.
 
 ## Contributing 🤝
 Contributions are welcome! Please feel free to submit a pull request.
 
 ### TODO
-- [ ] Add support for MutableDict
+- [ ] Add support for `MutableDict`
 
 
 ## License 📄
