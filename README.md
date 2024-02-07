@@ -50,6 +50,10 @@ class GeomTable(SQLModel, table=True):
         sa_type=Geomdantic(geometry_type="POINT", srid=4326),
         nullable=False,
     )
+    geom3: Multiploygon = Field(
+        sa_type=Geomdantic(geometry_type="MULTIPLOYGON", srid=4326, spatial_index=False),
+        nullable=False,
+    )
 
 ```
 
