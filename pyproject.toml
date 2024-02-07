@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geojsonchemy"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 authors = ["Nutchanon Ninyawee <nutchanon@codustry.com>"]
 readme = "README.md"

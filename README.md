@@ -17,17 +17,18 @@ Here's an example:
 ```python
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import Mapped, mapped_column
 from geojsonchemy import GeomJSON, Geomdantic
-from geojson-pydantic import FeatureCollection
+from geojson_pydantic.geometries import Geometry, Point, MultiPlolygon
 
 Base = declarative_base()
 
 class FooModel(Base):
-    __tablename__ = 'table_name'
+    __tablename__ = 'foo'
 
     id: Mapped[int] = Column(Integer, primary_key=True)
     geom: Mapped[dict] = mapped_column(GeomJSON(geometry_type="POINT", srid=4326), nullable=False, index=True)
-    geom2: Mapped[FeatureCollection] = mapped_column(Geomdantic(geometry_type="GEOMETRY", srid=4326), nullable=False, index=True)
+    geom2: Mapped[Geometry] = mapped_column(Geomdantic(geometry_type="GEOMETRY", srid=4326), nullable=False, index=True)
 ```
 
 ## SQLModel
@@ -37,7 +38,7 @@ In [SQLModel](https://github.com/tiangolo/sqlmodel), you can use the `GeomJSON` 
 from sqlmodel import Field, SQLModel
 
 class GeomTable(SQLModel, table=True):
-    __tablename__ = "table_name"
+    __tablename__ = "bar"
 
     id: int = Field(primary_key=True)
     name: str
@@ -45,8 +46,8 @@ class GeomTable(SQLModel, table=True):
         sa_type=GeomJSON(geometry_type="GEOMETRY", srid=4326),
         nullable=False,
     )
-    geom2: FeatureCollection = Field(
-        sa_type=Geomdantic(geometry_type="GEOMETRY", srid=4326),
+    geom2: Point = Field(
+        sa_type=Geomdantic(geometry_type="POINT", srid=4326),
         nullable=False,
     )
 

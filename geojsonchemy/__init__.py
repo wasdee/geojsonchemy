@@ -1,12 +1,11 @@
 import orjson
 from geoalchemy2.types import _GISType
 from sqlalchemy.sql import func
-from geojson_pydantic import Feature, FeatureCollection, Point
 from typing import Any, Callable, Optional
 import orjson
 from geoalchemy2.types import _GISType
 from sqlalchemy.sql import func
-from geojson_pydantic import Feature, FeatureCollection, Point
+from geojson_pydantic.geometries import Geometry, parse_geometry_obj
 
 
 class GeomJSON(_GISType):
@@ -52,7 +51,7 @@ class Geomdantic(_GISType):
     name: str = "GEOMETRY"
     from_text: str = "ST_GeomFromGeoJSON"
     as_binary: str = "ST_AsGeoJSON"
-    ElementType: Any = Feature
+    ElementType: Any = Geometry
     cache_ok: bool = False
 
     def column_expression(self, col: Any) -> Any:
@@ -64,7 +63,7 @@ class Geomdantic(_GISType):
         if dialect.name != "postgresql":
             raise NotImplementedError("Only PostgreSQL is supported")
         
-        def process(value: Optional[Feature]) -> Optional[str]:
+        def process(value: Optional[Geometry]) -> Optional[str]:
             if value is not None:
                 return value.model_dump_json()
 
@@ -75,6 +74,7 @@ class Geomdantic(_GISType):
     ) -> Callable[[Optional[str]], Any]:
         def process(value: Optional[str]) -> Any:
             if value is not None:
-                return Feature.model_validate_json(value)
+                dict_value = orjson.loads(value)
+                return parse_geometry_obj(dict_value)
 
         return process
