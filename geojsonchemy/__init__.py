@@ -52,7 +52,7 @@ class Geomdantic(_GISType):
     name: str = "GEOMETRY"
     from_text: str = "ST_GeomFromGeoJSON"
     as_binary: str = "ST_AsGeoJSON"
-    ElementType: Any = FeatureCollection
+    ElementType: Any = Feature
     cache_ok: bool = False
 
     def column_expression(self, col: Any) -> Any:
@@ -64,9 +64,9 @@ class Geomdantic(_GISType):
         if dialect.name != "postgresql":
             raise NotImplementedError("Only PostgreSQL is supported")
         
-        def process(value: Optional[FeatureCollection]) -> Optional[str]:
+        def process(value: Optional[Feature]) -> Optional[str]:
             if value is not None:
-                return value.model_dump(mode='json')
+                return value.model_dump_json()
 
         return process
 
@@ -75,6 +75,6 @@ class Geomdantic(_GISType):
     ) -> Callable[[Optional[str]], Any]:
         def process(value: Optional[str]) -> Any:
             if value is not None:
-                return FeatureCollection.model_validate_json(value)
+                return Feature.model_validate_json(value)
 
         return process
