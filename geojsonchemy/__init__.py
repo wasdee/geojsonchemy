@@ -65,7 +65,7 @@ class Geomdantic(_GISType):
         
         def process(value: Optional[Geometry]) -> Optional[str]:
             if value is not None:
-                return value.model_dump_json()
+                return value.geometry.model_dump_json()
 
         return process
 
